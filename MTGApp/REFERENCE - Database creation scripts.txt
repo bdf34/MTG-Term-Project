@@ -1,0 +1,104 @@
+CREATE TABLE UserInfo (
+	userID int IDENTITY(1,1),
+	username varchar(20) NOT NULL,
+	password varchar(20) NOT NULL,
+	collectionNumber int NOT NULL,
+	PRIMARY KEY (userID)
+)
+
+CREATE TABLE Decks (
+	deckID int IDENTITY(1,1),
+	userID int NOT NULL, 
+	deckName varchar(50) NOT NULL,
+	format varchar(60) NOT NULL,
+	color varchar(20) NOT NULL,
+	commanderCardID int,
+	colorIdentity varchar(10),
+
+	PRIMARY KEY (deckID),
+	FOREIGN KEY (userID) 
+		REFERENCES UserInfo(userID)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
+		
+)
+
+
+CREATE TABLE Cards(
+	cardID int PRIMARY KEY,
+	name varchar(60) NOT NULL,
+	text varchar(2000),
+	cost varchar(15) NOT NULL,
+	convertedManaCost int NOT NULL,
+	power varchar(4),
+	toughness varchar(4),
+	type varchar(50) NOT NULL,
+	rarity varchar(3) NOT NULL,
+	price varchar(10),
+	imageURI varchar(200) NOT NULL,
+	color varchar(20) NOT NULL,
+	colorIdentity varchar(20) NOT NULL,
+	attributes varchar(100),
+	edhrecRank int,
+	legalFormats varchar(60) NOT NULL
+)
+
+ALTER TABLE Decks
+ ADD FOREIGN KEY (commanderCardID) 
+		REFERENCES cards(cardID)
+		ON DELETE SET NULL
+		ON UPDATE CASCADE
+
+		
+		
+CREATE TABLE DeckList(
+	deckID int PRIMARY KEY,
+	cardID int UNIQUE,
+	quantity int NOT NULL,
+	collectionQuantity int NOT NULL,
+	starScore varchar(4),
+	reviewQuantity int DEFAULT(0),
+
+	FOREIGN KEY (deckID)
+	REFERENCES Decks(deckID)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+	)
+
+ALTER TABLE DeckList
+ALTER COLUMN reviewQuantity int NOT NULL;
+
+
+
+
+CREATE TABLE Collection(
+	collectionNumber int IDENTITY(1,1),
+	cardID int UNIQUE,
+	quantity int NOT NULL,
+	quantityInDecks int NOT NULL,
+	quantityAvailable int NOT NULL,
+
+	PRIMARY KEY (collectionNumber)
+)
+
+CREATE TABLE ProblemCards(
+	idNumber int IDENTITY(1,1),
+	deckID int,
+	cardID int,
+	color varchar(20),
+	attributes varchar(100) ,
+
+	PRIMARY KEY (idNumber),
+	
+	FOREIGN KEY (deckID)
+	REFERENCES Decks(deckID)
+	ON DELETE CASCADE
+	ON UPDATE CASCADE
+	)
+
+ALTER TABLE ProblemCards
+ADD FOREIGN KEY (cardID)
+	REFERENCES Cards(cardID)
+	ON DELETE NO ACTION
+	ON UPDATE NO ACTION
+
