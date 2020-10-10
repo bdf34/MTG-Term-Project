@@ -2,7 +2,7 @@ CREATE TABLE UserInfo (
 	userID int IDENTITY(1,1),
 	username varchar(20) NOT NULL,
 	password varchar(20) NOT NULL,
-	collectionNumber int NOT NULL,
+	collectionNumber varchar(50) NOT NULL,
 	PRIMARY KEY (userID)
 )
 
@@ -25,7 +25,7 @@ CREATE TABLE Decks (
 
 
 CREATE TABLE Cards(
-	cardID int PRIMARY KEY,
+	cardID varchar(50) PRIMARY KEY,
 	name varchar(60) NOT NULL,
 	text varchar(2000),
 	cost varchar(15) NOT NULL,
@@ -53,7 +53,7 @@ ALTER TABLE Decks
 		
 CREATE TABLE DeckList(
 	deckID int PRIMARY KEY,
-	cardID int UNIQUE,
+	cardID varchar(50) UNIQUE,
 	quantity int NOT NULL,
 	collectionQuantity int NOT NULL,
 	starScore varchar(4),
@@ -73,7 +73,7 @@ ALTER COLUMN reviewQuantity int NOT NULL;
 
 CREATE TABLE Collection(
 	collectionNumber int IDENTITY(1,1),
-	cardID int UNIQUE,
+	cardID varchar(50) UNIQUE,
 	quantity int NOT NULL,
 	quantityInDecks int NOT NULL,
 	quantityAvailable int NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE Collection(
 CREATE TABLE ProblemCards(
 	idNumber int IDENTITY(1,1),
 	deckID int,
-	cardID int,
+	cardID varchar(50),
 	color varchar(20),
 	attributes varchar(100) ,
 
