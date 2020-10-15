@@ -1,13 +1,13 @@
 ﻿using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Text;
 using System.Xml.Linq;
 using System;
 using System.Web.UI.HtmlControls;
 using System.Web.Services.Description;
-
+using System.Configuration;
 namespace MTGApp
 {
     public partial class _Default : Page
@@ -26,33 +26,27 @@ namespace MTGApp
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             
             builder.DataSource = "hrpsvr.database.windows.net";
-            Console.WriteLine(builder.ConnectionString);
             builder.UserID = "hrpzip";
             builder.Password = "DBMProject1!";
             builder.InitialCatalog = "MagicDB";
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString)) 
-            try
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                    connection.Open();
+                
+                string myQuery = "SELECT Top 1 * FROM Cards ORDER BY NEWID()";
 
-                    string myQuery = "SELECT Top 1 * FROM Questions ORDER BY rnd(cardID)";
-
-                    SqlCommand command = new SqlCommand(myQuery, connection);
-       
-                    using (SqlDataReader reader = command.ExecuteReader())
+                SqlCommand command = new SqlCommand(myQuery, connection);
+                connection.Open();
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                           Message.InnerHtml = myQuery;
-                        }
+                        Message.InnerHtml = (String.Format("{0}, {1}", reader[0], reader[1]));
+                        
                     }
+                }
             }
-            catch (SqlException ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-  
-            Console.ReadLine();
+            
+           // Console.ReadLine();
 
         }
        

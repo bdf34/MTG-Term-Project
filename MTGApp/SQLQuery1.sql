@@ -1,1 +1,1 @@
-﻿SELECT Top 1 * FROM Questions ORDER BY rnd(cardID)
+﻿SELECT Top 1 * FROM Cards ORDER BY NEWID()
