@@ -1,0 +1,1 @@
+﻿SELECT Top 1 * FROM Questions ORDER BY rnd(cardID)
