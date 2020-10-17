@@ -14,27 +14,48 @@ using System.Xml.Linq;
 
 namespace MTGApp
 {
-    public partial class CollectionEntry : System.Web.UI.Page
+
+    public partial class CollectionEntry : Page
     {
+
         protected void Page_Load(object sender, EventArgs e)
         {
             HtmlTextArea CollectionEntry = new HtmlTextArea();
-            CollectionEntry.ID = "entry-box";
-            CollectionEntry.InnerHtml = "Enter your cards here...";
-            CollectionEntry.Attributes.Add("style", "float: left;  height: 80%; width: 50%;");
+            CollectionEntry.ID = "entrybox";
+            CollectionEntry.InnerHtml = "Enter your cards here in this format:   \n1x Llanowar Elves \n2x Lightning Bolt ";
+            CollectionEntry.Attributes.Add("style", "float: left;");
+            CollectionEntry.Attributes.Add("cols", "50");
+            CollectionEntry.Attributes.Add("rows", "20");
             TextBox.Controls.Add(CollectionEntry);
 
+            HtmlElement Output = new HtmlElement();
+            Output.ID = "Outputter";
+            Output.InnerHtml = "Test";
+            Output.Attributes.Add("style", "float: left;");
+            OutputArea.Controls.Add(Output);
 
             HtmlButton SubmitButton = new HtmlButton();
-            SubmitButton.ID = "btn-submit";
+            SubmitButton.ID = "Submitter";
             SubmitButton.InnerHtml = "Submit";
-            SubmitButton.ServerClick += new System.EventHandler(this.SubmitButton_Click);
+            SubmitButton.Attributes.Add("style", "float: left;");
+            SubmitButton.ServerClick += new EventHandler(SubmitButton_Click);
             ControlContainer.Controls.Add(SubmitButton);
             
+            
+            
+
         }
 
         void SubmitButton_Click(object sender, EventArgs e)
         {
+
+            string textFromForm = Request["entrybox"].ToString();
+
+
+
+            Message.InnerHtml = textFromForm;
+
+
 
         }
     }
