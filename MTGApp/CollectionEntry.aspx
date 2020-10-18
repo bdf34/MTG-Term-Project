@@ -13,26 +13,53 @@
     
 <div>
     <form id="MassEntryBox" runat="server">
-    <asp:PlaceHolder ID="TextBox" runat="server" />
+        <textarea id="entrybox" runat="server" style="float:left;" cols="50" rows="20">
+Enter your cards here in this format:   
+1x Llanowar Elves 
+2x Lightning Bolt
+        </textarea>
+    
 
     </form>
    
     
     
 </div>
-     <asp:PlaceHolder ID="ControlContainer" runat="server"/>
 
-    <p>
-        &nbsp;</p>
-
-    <p>
-        <asp:PlaceHolder ID="OutputArea" runat="server"/>
-        
-    </p>
-          <span id="Message" runat="server"> 
+<span id="Message" runat="server"> 
               Message area
               </span>
-    
+
+
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        &nbsp;
+    </p>
+    <p>
+        &nbsp;
+    </p>
+          
+    <asp:PlaceHolder ID="ControlContainer" runat="server" />
     
     
 </body>

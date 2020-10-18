@@ -24,31 +24,13 @@ namespace MTGApp
         protected global::System.Web.UI.HtmlControls.HtmlForm MassEntryBox;
 
         /// <summary>
-        /// TextBox control.
+        /// entrybox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder TextBox;
-
-        /// <summary>
-        /// ControlContainer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ControlContainer;
-
-        /// <summary>
-        /// OutputArea control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder OutputArea;
+        protected global::System.Web.UI.HtmlControls.HtmlTextArea entrybox;
 
         /// <summary>
         /// Message control.
@@ -58,5 +40,14 @@ namespace MTGApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Message;
+
+        /// <summary>
+        /// ControlContainer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder ControlContainer;
     }
 }
