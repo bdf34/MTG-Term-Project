@@ -110,13 +110,33 @@ namespace MTGApp
                 
                 string Username = TextBoxUsername.Text;
                 string Password = TextBoxPassword.Text;
-                
+                string userExists = "SELECT * FROM UserInfo WHERE username='" + Username + "'";
                 string myQuery = "INSERT INTO UserInfo(username, password, collectionNumber) " +
                     "VALUES('" + Username + "', '" + Password + "', 0)";
-
-                connection.Open();
+                SqlCommand cmd = new SqlCommand(userExists, connection);
                 SqlCommand command = new SqlCommand(myQuery, connection);
-                command.ExecuteNonQuery();
+                connection.Open();
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    if (sdr.Read())
+                    {
+                        Label4.Text = "User already exists!";
+                        connection.Close();
+                    }
+                    else
+                    {
+                        connection.Close();
+                        connection.Open();
+                        Label4.Text = " ";
+                        command.ExecuteNonQuery();
+                        Label4.Text = "Account Created!";
+                        connection.Close();
+                    }
+                }
+
+
+                
+               
                 //command.Parameters.Add(userParam);
                 //command.Parameters.Add(passParam);
                 
