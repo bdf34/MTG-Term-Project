@@ -10,6 +10,7 @@
     <asp:PlaceHolder ID="Signup"
            runat="server"/>
     <td><asp:Label ID="Label4" runat="server"></asp:Label></td>
+    <td><asp:Label ID="Label3" runat="server"></asp:Label></td>
     
 
     <div class="row">

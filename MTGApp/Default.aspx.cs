@@ -107,13 +107,19 @@ namespace MTGApp
             builder.InitialCatalog = "MagicDB";
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                connection.Open();
-                string myQuery = "INSERT INTO UserInfo (username, password, collectionNumber) VALUES" +
-                   "(@username, @password, 0); ";
+                
+                string Username = TextBoxUsername.Text;
+                string Password = TextBoxPassword.Text;
+                
+                string myQuery = "INSERT INTO UserInfo(username, password, collectionNumber) " +
+                    "VALUES('" + Username + "', '" + Password + "', 0)";
 
+                connection.Open();
                 SqlCommand command = new SqlCommand(myQuery, connection);
-                command.Parameters.AddWithValue("username", TextBoxUsername.Text);
-                command.Parameters.AddWithValue("password", TextBoxPassword.Text);
+                command.ExecuteNonQuery();
+                //command.Parameters.Add(userParam);
+                //command.Parameters.Add(passParam);
+                
             }
         }
 
