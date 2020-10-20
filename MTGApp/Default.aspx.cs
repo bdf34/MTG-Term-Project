@@ -11,15 +11,18 @@ using System.Configuration;
 using System.Data;
 using System.Configuration;
 using System.Web.Security;
-
+using System.Security.Cryptography; //want to use this library for a hash function to store our password eventually
 
 namespace MTGApp
 
 {
     public partial class _Default : Page
     {
+       
         protected void Page_Load(object sender, EventArgs e)
         {
+            //HttpCookie CookieName = Request.Cookies["username"];
+           
             HtmlButton RandomButton = new HtmlButton();
             RandomButton.ID = "RandomButton";
             RandomButton.InnerHtml = "Random Card!";
@@ -86,7 +89,12 @@ namespace MTGApp
                 {
                     if (sdr.Read())
                     {
-                        Label4.Text = "Login Sucess......!!";
+                        Label4.Text = "Login Sucess......!!\n";
+                        HttpCookie CookieName = new HttpCookie("username");
+                        CookieName.Value = user;
+                        Response.SetCookie(CookieName);
+                        string User_name = Request.Cookies["username"].Value;
+                        Label3.Text = "Signed in as " + User_name;
                     }
                     else
                     {
@@ -97,6 +105,7 @@ namespace MTGApp
 
             }
         }
+
         void SignUp_Click(object sender, EventArgs e)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
@@ -134,12 +143,6 @@ namespace MTGApp
                     }
                 }
 
-
-                
-               
-                //command.Parameters.Add(userParam);
-                //command.Parameters.Add(passParam);
-                
             }
         }
 
