@@ -9,7 +9,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.Services.Description;
 using System.Configuration;
 using System.Data;
-using System.Configuration;
+
 using System.Web.Security;
 using System.Security.Cryptography; //want to use this library for a hash function to store our password eventually
 
@@ -70,7 +70,7 @@ namespace MTGApp
         }
         void SignIn_Click(object sender, EventArgs e)
         {
-            int userid = 0;
+            //int userid = 0;
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
             builder.DataSource = "hrpsvr.database.windows.net";
             builder.UserID = "hrpzip";

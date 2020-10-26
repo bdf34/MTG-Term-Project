@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Web.UI.HtmlControls;
+using System.Diagnostics;
 using System.Web.Services.Description;
 using System.Configuration;
 using Microsoft.Data.SqlClient;
@@ -17,6 +19,7 @@ namespace MTGApp
 
     public partial class CollectionEntry : Page
     {
+        List<Tuple<string, string>> cardList = new List<Tuple<string, string>>();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -33,12 +36,11 @@ namespace MTGApp
 
         void SubmitButton_Click(Object sender, EventArgs e)
         {
-
+            //get text from entrybox
             string textFromForm = Request["entrybox"].ToString();
 
-            Message.InnerHtml = textFromForm;
-
-
+            //create two lists - one to look for a number of cards followed by an x
+            // and the name of those cards right after, and one to hold bad input values
             List<string> cardInputs = textFromForm.Split('\n').ToList();
             List<string> badValues = new List<string>();
 
@@ -50,7 +52,7 @@ namespace MTGApp
 
                     for(int i = 0; i < line.Length; ++i)
                     { 
-                        if (line[i] == 'x')
+                        if (line[i] == 'x') //looking for the first x, after a number
                         {
                             breakFlag = true; 
                         }
@@ -61,10 +63,13 @@ namespace MTGApp
 
                         if (breakFlag)
                         {
-                            cardName = line.Substring(i + 1);
+
+                            cardName = line.Substring(i + 1, line.Length - (i+1));
                             i = line.Length;
-                            cardName.TrimStart(' ');
-                            cardName.TrimEnd(' ');
+                            while(!(Char.IsLetter(cardName[cardName.Length-1]))) //if the last character is a carriage return or not a letter, get rid of it
+                            {
+                                cardName = cardName.Substring(0, (cardName.Length - 1));
+                            }
                         }
 
                         if ((!breakFlag) && (i == line.Length-1))
@@ -73,11 +78,13 @@ namespace MTGApp
                         }
                     }
 
-                string formatedQuantity = new string((from c in quantity
+                    string formattedQuantity = new string((from c in quantity
                                                       where char.IsDigit(c)
                                                       select c ).ToArray());
-                
+                    cardList.Add(Tuple.Create(formattedQuantity, cardName));
                 }
+
+            
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
             {
@@ -90,20 +97,48 @@ namespace MTGApp
 
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
+                string myQuery = "SELECT name FROM Cards WHERE name =";
 
-                string myQuery = "SELECT Top 1 * FROM Cards ORDER BY NEWID()";
-
-                SqlCommand command = new SqlCommand(myQuery, connection);
                 connection.Open();
-                using (SqlDataReader reader = command.ExecuteReader())
+                int counter = cardList.Count;
+                for (int i = 0; i < counter; i++)
                 {
-                    while (reader.Read())
-                    {
-                        Message.InnerHtml = (String.Format("{0}, {1}", reader[0], reader[1]));
+                    if ((cardList[i].Item2 != null) && (cardList[i].Item2.Length > 1))
+                    {   
+                        string test = cardList[i].Item2.Substring(1, cardList[i].Item2.Length-1);
+                        myQuery += ("\'" + test + "\' " + ";");
 
+                        SqlCommand cmd = new SqlCommand(myQuery, connection);
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if (sdr.Read())
+                            {
+                                Debug.WriteLine(cardList[i].Item2 + " exists");
+
+                            }
+                            else
+                            {
+                                Debug.WriteLine(cardList[i].Item2 + "doesnt exist");
+                                string errorBuild = cardList[i].Item1 + cardList[i].Item2;
+                                badValues.Add(errorBuild); //add to error list
+                                cardList.Remove(cardList[i]);   //Remove from list
+                                counter = cardList.Count;
+                            }
+                        }
+                        
+                        myQuery = "SELECT name FROM Cards WHERE name =";
                     }
-                }
+              }
+
+                connection.Close();
+
+               
+             }
+
+
+
+
             }
         }
     }
-}
