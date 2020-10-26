@@ -19,7 +19,7 @@ namespace MTGApp
 
     public partial class CollectionEntry : Page
     {
-        List<Tuple<string, string>> cardList = new List<Tuple<string, string>>();
+        
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -44,47 +44,77 @@ namespace MTGApp
             List<string> cardInputs = textFromForm.Split('\n').ToList();
             List<string> badValues = new List<string>();
 
+            List<Tuple<string, string>> cardList = new List<Tuple<string, string>>();
+
+            if (getDataLists(textFromForm, cardInputs, badValues, cardList))
+            {
+                //insert 
+            }
+            else
+            {
+                outPutErrors(badValues);
+            }
+
+               
+         }
+
+        void outPutErrors(List<string> values)
+        {
+            string errorList = "Cards were not entered. These values are not valid card inputs: <br \\><br \\>";
+            foreach (string error in values)
+            {
+                errorList += error;
+                errorList += "<br \\>";
+            }
+
+            Debug.WriteLine("Errors: " + errorList);
+            Message.InnerHtml = errorList;
+        }
+
+        Boolean getDataLists(string textFromForm, List<string> cardInputs, List<string> badValues, List<Tuple<string, string>> cardList)
+        {
+
             foreach (string line in cardInputs)
+            {
+                bool breakFlag = false;
+                string quantity = "";
+                string cardName = "";
+
+                for (int i = 0; i < line.Length; ++i)
                 {
-                    bool breakFlag = false;
-                    string quantity ="";
-                    string cardName = "";
+                    if (line[i] == 'x') //looking for the first x, after a number
+                    {
+                        breakFlag = true;
+                    }
+                    else
+                    {
+                        quantity += line[i];
+                    }
 
-                    for(int i = 0; i < line.Length; ++i)
-                    { 
-                        if (line[i] == 'x') //looking for the first x, after a number
-                        {
-                            breakFlag = true; 
-                        }
-                        else
-                        {
-                            quantity += line[i];
-                        }
+                    if (breakFlag)
+                    {
 
-                        if (breakFlag)
+                        cardName = line.Substring(i + 1, line.Length - (i + 1));
+                        i = line.Length;
+                        while (!(Char.IsLetter(cardName[cardName.Length - 1]))) //if the last character is a carriage return or not a letter, get rid of it
                         {
-
-                            cardName = line.Substring(i + 1, line.Length - (i+1));
-                            i = line.Length;
-                            while(!(Char.IsLetter(cardName[cardName.Length-1]))) //if the last character is a carriage return or not a letter, get rid of it
-                            {
-                                cardName = cardName.Substring(0, (cardName.Length - 1));
-                            }
-                        }
-
-                        if ((!breakFlag) && (i == line.Length-1))
-                        {
-                            badValues.Add(line);
+                            cardName = cardName.Substring(0, (cardName.Length - 1));
                         }
                     }
 
-                    string formattedQuantity = new string((from c in quantity
-                                                      where char.IsDigit(c)
-                                                      select c ).ToArray());
-                    cardList.Add(Tuple.Create(formattedQuantity, cardName));
+                    if ((!breakFlag) && (i == line.Length - 1))
+                    {
+                        badValues.Add(line);
+                    }
                 }
 
-            
+                string formattedQuantity = new string((from c in quantity
+                                                       where char.IsDigit(c)
+                                                       select c).ToArray());
+                cardList.Add(Tuple.Create(formattedQuantity, cardName));
+            }
+
+
 
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
             {
@@ -104,8 +134,8 @@ namespace MTGApp
                 for (int i = 0; i < counter; i++)
                 {
                     if ((cardList[i].Item2 != null) && (cardList[i].Item2.Length > 1))
-                    {   
-                        string test = cardList[i].Item2.Substring(1, cardList[i].Item2.Length-1);
+                    {
+                        string test = cardList[i].Item2.Substring(1, cardList[i].Item2.Length - 1);
                         myQuery += ("\'" + test + "\' " + ";");
 
                         SqlCommand cmd = new SqlCommand(myQuery, connection);
@@ -126,19 +156,26 @@ namespace MTGApp
                                 counter = cardList.Count;
                             }
                         }
-                        
+
                         myQuery = "SELECT name FROM Cards WHERE name =";
                     }
-              }
+                }
 
                 connection.Close();
 
-               
-             }
+                if (badValues.Count == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;  
+                }
 
-
-
-
+                
             }
+
+
         }
-    }
+    }       
+ }
