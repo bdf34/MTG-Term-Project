@@ -48,7 +48,7 @@ namespace MTGApp
 
             if (getDataLists(textFromForm, cardInputs, badValues, cardList))
             {
-                //insert 
+                insertCollection(cardList);
             }
             else
             {
@@ -99,6 +99,7 @@ namespace MTGApp
                         while (!(Char.IsLetter(cardName[cardName.Length - 1]))) //if the last character is a carriage return or not a letter, get rid of it
                         {
                             cardName = cardName.Substring(0, (cardName.Length - 1));
+                            
                         }
                     }
 
@@ -159,6 +160,12 @@ namespace MTGApp
 
                         myQuery = "SELECT name FROM Cards WHERE name =";
                     }
+                    else
+                    {
+                        cardList.RemoveAt(i);
+                        counter--;
+                        i--;
+                    }
                 }
 
                 connection.Close();
@@ -177,5 +184,62 @@ namespace MTGApp
 
 
         }
+    
+    
+        void insertCollection(List<Tuple<string,string>> cards)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+            {
+                DataSource = "hrpsvr.database.windows.net",
+                UserID = "hrpzip",
+                Password = "DBMProject1!",
+                InitialCatalog = "MagicDB"
+            };
+
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                string queryBuild = "";
+                connection.Open();
+
+                foreach (Tuple<string,string> record in cards)
+                {
+                    queryBuild = "EXEC CollectionInsert @UserId = ";
+                    //set user id
+                    queryBuild += "22"; //REPLACE ME
+                    queryBuild += ", @Quantity = ";
+                    queryBuild += record.Item1;
+                    queryBuild += ", @CardName = \' ";
+                    queryBuild += record.Item2;
+                    queryBuild += "\';";
+
+
+                    SqlCommand cmd = new SqlCommand(queryBuild, connection);
+
+                    
+
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+
+                        if (sdr.Read())
+                        {
+                            Debug.WriteLine(record.Item2 + "entered");
+                        }
+                        else
+                        {
+                            Debug.WriteLine(record.Item2 + "failed to post");
+                            Debug.WriteLine(queryBuild);
+                        }
+
+                    }
+                }
+
+                connection.Close();
+
+            }
+
+
+            }
+
     }       
  }
