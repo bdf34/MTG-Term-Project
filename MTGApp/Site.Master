@@ -52,17 +52,27 @@
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/CollectionEntry">Collection Entry</a></li>
                     </ul>
                 </div>
             </div>
         </div>
+        <asp:Label ID="Label1" runat="server" Text="login"></asp:Label>
+            <asp:TextBox ID="TextBoxUsername" placeholder="username" runat="server"></asp:TextBox>
+            <asp:TextBox ID="TextBoxPassword" placeholder="password" TextMode="Password" runat="server"></asp:TextBox>
+            <asp:PlaceHolder ID="Signin"
+                runat="server"/>
+            <asp:PlaceHolder ID="Signup"
+                runat="server"/>
+            <td><asp:Label ID="Label4" runat="server"></asp:Label></td>
+            <td><asp:Label ID="Label3" runat="server"></asp:Label></td>
+            <hr />
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
-            <hr />
+            
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - My ASP.NET Application</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Magic the Gathering Deck Builder</p>
             </footer>
         </div>
 
