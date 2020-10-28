@@ -13,11 +13,13 @@
     
 <div>
     <form id="MassEntryBox" runat="server">
+        Enter your cards here in this format: <br />
+        1xLlanowar Elves <br />
+        2xLightning Bolt
+        <br /><br /><br />
         <textarea id="entrybox" runat="server" style="float:left;" cols="50" rows="20">
-Enter your cards here in this format:   
-1x Llanowar Elves 
-2x Lightning Bolt
-        </textarea>
+1xLlanowar Elves 
+2xLightning Bolt</textarea>
     
 
     </form>

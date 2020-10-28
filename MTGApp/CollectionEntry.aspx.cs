@@ -101,6 +101,22 @@ namespace MTGApp
                             cardName = cardName.Substring(0, (cardName.Length - 1));
                             
                         }
+                        /*
+                        int trimLength = cardName.Length;
+                        for (int k = 0; k < trimLength; k++)
+                        {
+                            if (cardName[k] == ' ')
+                            {
+                                cardName = cardName.Substring(k + 1, trimLength - 1);
+                                trimLength--;
+                                k--;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                        */
                     }
 
                     if ((!breakFlag) && (i == line.Length - 1))
@@ -129,15 +145,15 @@ namespace MTGApp
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 string myQuery = "SELECT name FROM Cards WHERE name =";
-
+                
                 connection.Open();
                 int counter = cardList.Count;
                 for (int i = 0; i < counter; i++)
                 {
                     if ((cardList[i].Item2 != null) && (cardList[i].Item2.Length > 1))
                     {
-                        string test = cardList[i].Item2.Substring(1, cardList[i].Item2.Length - 1);
-                        myQuery += ("\'" + test + "\' " + ";");
+                        //string test = .Substring(1, cardList[i].Item2.Length - 1);
+                        myQuery += ("\'" + cardList[i].Item2 + "\' " + ";");
 
                         SqlCommand cmd = new SqlCommand(myQuery, connection);
 
@@ -151,6 +167,7 @@ namespace MTGApp
                             else
                             {
                                 Debug.WriteLine(cardList[i].Item2 + "doesnt exist");
+                                Debug.WriteLine(myQuery);
                                 string errorBuild = cardList[i].Item1 + cardList[i].Item2;
                                 badValues.Add(errorBuild); //add to error list
                                 cardList.Remove(cardList[i]);   //Remove from list
@@ -209,7 +226,7 @@ namespace MTGApp
                     queryBuild += "22"; //REPLACE ME
                     queryBuild += ", @Quantity = ";
                     queryBuild += record.Item1;
-                    queryBuild += ", @CardName = \' ";
+                    queryBuild += ", @CardName = \'";
                     queryBuild += record.Item2;
                     queryBuild += "\';";
 
