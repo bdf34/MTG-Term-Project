@@ -13,7 +13,7 @@
     1xLlanowar Elves <br />
     2xLightning Bolt <br />
 
-        <textarea id="entrybox" runat="server" style="float:left;" cols="50" rows="20">
+        <textarea id="entrybox" name="entrybox"  runat="server" style="float:left;" cols="50" rows="20">
 1xLlanowar Elves 
 2xLightning Bolt</textarea>
     

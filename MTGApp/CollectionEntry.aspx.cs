@@ -37,7 +37,7 @@ namespace MTGApp
         void SubmitButton_Click(Object sender, EventArgs e)
         {
             //get text from entrybox
-            string textFromForm = Request["entrybox"].ToString();
+            string textFromForm = entrybox.Value;
 
             //create two lists - one to look for a number of cards followed by an x
             // and the name of those cards right after, and one to hold bad input values
