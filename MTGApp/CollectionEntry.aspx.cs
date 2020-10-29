@@ -233,30 +233,16 @@ namespace MTGApp
 
                     SqlCommand cmd = new SqlCommand(queryBuild, connection);
 
-                    
-
-                    using (SqlDataReader sdr = cmd.ExecuteReader())
-                    {
-
-                        if (sdr.Read())
-                        {
-                            Debug.WriteLine(record.Item2 + "entered");
-                        }
-                        else
-                        {
-                            Debug.WriteLine(record.Item2 + "failed to post");
-                            Debug.WriteLine(queryBuild);
-                        }
-
-                    }
+                    cmd.ExecuteNonQuery();
                 }
 
                 connection.Close();
 
             }
 
+            Message.InnerHtml = "Message area <br />Cards added successfully to your collection." ;
 
-            }
+        }
 
     }       
  }
