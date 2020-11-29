@@ -1,0 +1,119 @@
+Update Card
+set attributes = ' ';
+
+Update Card
+set attributes += 'wipes '
+where (text like '%destroy all creatures%' and text not like '%blocked%')
+or (text like '%destroy each creature%') 
+or (text like '%estroy%' and text like '%all nonland permanents%') 
+or (text like '%xile%' and text like '%all nonland permanents%')
+or (text like '%exile each creature with%')
+or (cardID = 5170 or  cardID = 11283 OR cardID = 9056 OR cardID =  7669 OR cardID =  11659 OR cardID =  13441
+OR cardID =  13603 OR cardID =  4852 OR cardID =  11846 OR cardID =  1789 OR cardID =  10478);
+
+update Card
+set attributes += 'landfall '
+where text like '%henever a land enters the battlefield under your control%';
+
+update Card
+set attributes += 'planeswalker '
+where type like '%laneswalke%';
+
+update Card
+set attributes += 'enchantment '
+where type like '%nchantmen%';
+
+update Card
+set attributes += 'artifact '
+where type like '%rtifac%' and type not like '%reatur%';
+
+update Card
+set attributes += 'counterspell ' 
+where text like '%target spell%' and text not like '%replac%' and text not like '%change%' and text not like '%becomes%';
+
+update Card
+set attributes += 'counters '
+where text like '%+1 counter%';
+
+update Card
+set attributes += 'counters '
+where text like '%proliferate%' and text not like '%+1 counter%';
+
+
+update Card
+set attributes += 'burn '
+where text like '%damage%' and (text like '%any target%' or text like '%target player%') and color <> 'W';
+
+update Card
+set attributes += 'mill '
+ where text like '% mill %' OR text like '% mills %' or text like '%exiles the top card%' 
+or (text like '%exiles the top card%' and text like '%cards%');
+
+update Card
+set attributes += 'tokens '
+where (text like '%create%' and text like '%token%') or text like '%populate%';
+
+update Card
+set attributes += 'voltron '
+where type like '%equip%' or (type like 'aura' and text like '%enchant creature%');
+
+update Card
+set attributes += 'voltron '
+where text like '%equipment%' and text not like '%destroy%';
+
+update Card
+set attributes += 'brute '
+where (type like '%reature%' and (text like '%hexproof%' or text like '%shroud%' or text like '%indestructible%' or text like 'protection')) or toughness > 4;
+
+update Card
+set attributes += 'removal '
+where text like '%destroy target creature%' or text like '%exile target creature%';
+
+
+update Card
+set attributes += 'nocspell '
+where text like '%can''t be countered%' or text like '%split second%';
+
+update Card
+set attributes += 'regen '
+where (text like '%gain hexproof%') or (text like '%gain%' and text like '%protection%') or (text like '%regenerate%' and text not like '%regenerated%');
+
+update Card
+set attributes += 'antidmg '
+where (text like '%prevent all damage%' and text not like '%enchanted%')
+or (text like '%prevent%' and text like '%next%' and text like '%damage%' and text not like '%enchanted%');
+
+update Card
+set attributes += 'disench '
+where (text like '%estroy all enchantment%') or (text like '%estroy%' and text like '%target enchantment%') or (text like '%exile %' and text like '%target enchantment%') or (text like '%estroy all artifacts and enchantment%') or (text like '%estroy%' and text like '%all nonland permanents%') or (text like '%xile%' and text like '%all nonland permanents%');
+
+update Card
+set attributes += 'shatter '
+where (text like '%estroy all artifact%') or (text like '%estroy%' and text like '%target artifact%') or (text like '%exile %' and text like '%target artifact%') or (text like '%estroy all artifacts%') or (text like '%estroy%' and text like '%all nonland permanents%') or (text like '%xile%' and text like '%all nonland permanents%');
+
+update Card
+set attributes += 'notoke '
+where attributes like '%wipes%'
+or (cardID = 14899 or  cardID = 6949 OR cardID = 13069 OR cardID = 17769 OR cardID = 2278)
+or (text like '%return all nonland%');
+
+
+update Card
+set attributes += 'decksave '
+where text like '%graveyard into%' and text like '%library%' ;
+
+update Card
+set attributes += 'landdest '
+where text like '%land enters the battlefield under an%' or (text like '%henever a land enters the battlefield%' and name not like '%seed the land%');
+
+update Card
+set attributes += 'anticount '
+where text like '%remove all counters from%' or name like '%Solemnity%' or (text like '%return all nonland%') or attributes like '%wipes%';
+
+update Card
+set attributes += 'antipw '
+where (text like '%damage%' and (text like '%any target%' or text like '%target planeswalker%') and color <> 'W') or (text like '%target planeswalker%') or (text like '%destroy%' and text like '%planeswalker%');
+
+update Card
+set attributes += 'save '
+where (text like '%regenerate%' and text not like '%regenerated%') OR (text like '%gain indestructible%') or (text like '%gain%' and text like '%and indestructible%') ;
