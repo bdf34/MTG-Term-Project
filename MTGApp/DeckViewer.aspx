@@ -35,8 +35,8 @@
           <HeaderTemplate>
               <table>
               <tr>
-                 <th>Name</th>
-                 <th>Description</th>
+                 <th>Card ID Number</th>
+                 <th>Quantity</th>
               </tr>
           </HeaderTemplate>
 
@@ -44,11 +44,11 @@
           <tr>
               <td bgcolor="#CCFFCC">
                 <asp:Label runat="server" ID="Label1" 
-                    text='<%# Eval("userID") %>' />
+                    text='<%# Eval("cardID") %>' />
               </td>
               <td bgcolor="#CCFFCC">
                   <asp:Label runat="server" ID="Label2" 
-                      text='<%# Eval("deckName") %>' />
+                      text='<%# Eval("quantity") %>' />
               </td>
           </tr>
           </ItemTemplate>
@@ -57,11 +57,11 @@
           <tr>
               <td >
                 <asp:Label runat="server" ID="Label3" 
-                    text='<%# Eval("userID") %>' />
+                    text='<%# Eval("cardID") %>' />
               </td>
               <td >
                  <asp:Label runat="server" ID="Label4" 
-                     text='<%# Eval("deckName") %>' />
+                     text='<%# Eval("quantity") %>' />
               </td>
           </tr>
           </AlternatingItemTemplate>
@@ -75,8 +75,7 @@
           ConnectionString=
               "<%$ ConnectionStrings:myServer %>"
           ID="SqlDataSource1" runat="server" 
-          SelectCommand="SELECT [deckID], [userID], 
-              [deckName] FROM [DeckLIst]">
+          SelectCommand="SELECT [cardID], [quantity] FROM [DeckList] WHERE [deckID] = 107">
       </asp:SqlDataSource>
 
 
