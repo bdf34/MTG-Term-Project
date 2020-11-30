@@ -35,7 +35,7 @@ namespace MTGApp
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
 
-                string myQuery = "SELECT Top 1 * FROM Cards ORDER BY NEWID()";
+                string myQuery = "SELECT Top 1 * FROM Card ORDER BY NEWID()";
 
                 SqlCommand command = new SqlCommand(myQuery, connection);
                 connection.Open();
