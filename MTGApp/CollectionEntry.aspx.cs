@@ -144,7 +144,7 @@ namespace MTGApp
 
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                string myQuery = "SELECT name FROM Cards WHERE name =";
+                string myQuery = "SELECT name FROM Card WHERE name =";
                 
                 connection.Open();
                 int counter = cardList.Count;
@@ -175,7 +175,7 @@ namespace MTGApp
                             }
                         }
 
-                        myQuery = "SELECT name FROM Cards WHERE name =";
+                        myQuery = "SELECT name FROM Card WHERE name =";
                     }
                     else
                     {
@@ -205,6 +205,7 @@ namespace MTGApp
     
         void insertCollection(List<Tuple<string,string>> cards)
         {
+            
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
             {
                 DataSource = "hrpsvr.database.windows.net",
@@ -212,18 +213,27 @@ namespace MTGApp
                 Password = "DBMProject1!",
                 InitialCatalog = "MagicDB"
             };
-
+           
 
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                string queryBuild = "";
+                string User_name = Request.Cookies["username"].Value;
                 connection.Open();
+                string myQuery = "SELECT userID FROM UserInfo WHERE username ="
+                    + " '" + User_name + "' ";
+                SqlCommand command = new SqlCommand(myQuery, connection);
+                int i = 0;
+                object user_id = command.ExecuteScalar();
+                if (user_id != null)
+                    i = (int)user_id;
+                
+                string queryBuild = "";
 
                 foreach (Tuple<string,string> record in cards)
                 {
                     queryBuild = "EXEC CollectionInsert @UserId = ";
                     //set user id
-                    queryBuild += "22"; //REPLACE ME
+                    queryBuild += i;
                     queryBuild += ", @Quantity = ";
                     queryBuild += record.Item1;
                     queryBuild += ", @CardName = \'";

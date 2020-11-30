@@ -4,6 +4,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <body>
+    <span id="Span1"
+            runat="server"/>
+    <br />
+    <br />
+    <br />
+
     <h2>Collection Mass Entry</h2>
     Use this form to enter your collection
     <br /><br />
@@ -19,10 +25,10 @@
     
 
 
-
 <span id="Message" runat="server"> 
               Message area
               </span>
+
 
 
     <p>
