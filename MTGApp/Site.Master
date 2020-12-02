@@ -71,7 +71,7 @@
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>
             
-            <footer style=" position:absolute; bottom: 0">
+            <footer style=" position:page ; bottom: 0">
                 <p>&copy; <%: DateTime.Now.Year %> - Magic the Gathering Deck Builder</p>
                 <p>This application is unofficial Fan Content permitted under the Wizards of the Coast Fan Content Policy</p>
             </footer>

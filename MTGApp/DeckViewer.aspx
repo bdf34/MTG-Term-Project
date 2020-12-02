@@ -1,13 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DeckViewer.aspx.cs" Inherits="MTGApp.DeckViewer" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="DeckViewer.aspx.cs" Inherits="MTGApp.DeckViewer" %>
 
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server" >
         <div>
             <br />
             <br />
@@ -22,6 +15,7 @@
             Choose your deck:
             <select id="Select1" multiple="false" runat="server"/>
             <asp:PlaceHolder ID="ConfirmDeck" runat="server" />
+            <asp:PlaceHolder ID="PlaceHolder1" runat="server" />
             <asp:PlaceHolder ID="DeckDisplay" runat="server" />
             <asp:PlaceHolder ID="ProblemCardDisplay" runat="server" />
             <asp:PlaceHolder ID="ProblemCardEntry" runat="server" />
@@ -83,6 +77,15 @@
          <td><asp:TextBox ID="RandomDeck" placeholder="Random Deck" style="text-align: center" runat="server"></asp:TextBox></td>
          <td><asp:PlaceHolder ID="RandomDeckButton" runat="server"/></td>
         <td><asp:Label ID="ErrorMsg" style="color:red" runat="server"></asp:Label></td>
-    </form>
-</body>
-</html>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+</asp:Content>

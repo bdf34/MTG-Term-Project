@@ -23,6 +23,9 @@ namespace MTGApp
 
             if (!IsPostBack)
             {
+
+               
+
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
                 {
                     DataSource = "hrpsvr.database.windows.net",
@@ -54,21 +57,19 @@ namespace MTGApp
                 };
                 DeckButton.Attributes.Add("style", "float: left;");
                 DeckButton.ServerClick += new EventHandler(DeckButton_Click);
-                ConfirmDeck.Controls.Add(DeckButton);
-                
+                PlaceHolder1.Controls.Add(DeckButton);
 
-
-
+                HtmlButton RandomDeckButton = new HtmlButton
+                {
+                    InnerHtml = "Generate Random Deck"
+                };
+                RandomDeckButton.Attributes.Add("style", "float: right;");
+                RandomDeckButton.ServerClick += new EventHandler(RandomDeck_Click);
+                ConfirmDeck.Controls.Add(RandomDeckButton);
 
             }
 
-            HtmlButton RandomDeckButton = new HtmlButton
-            {
-                InnerHtml = "Generate Random Deck"
-            };
-            RandomDeckButton.Attributes.Add("style", "float: right;");
-            RandomDeckButton.ServerClick += new EventHandler(RandomDeck_Click);
-            ConfirmDeck.Controls.Add(RandomDeckButton);
+           
 
 
 
