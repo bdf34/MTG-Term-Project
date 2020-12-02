@@ -55,13 +55,21 @@ namespace MTGApp
                 DeckButton.Attributes.Add("style", "float: left;");
                 DeckButton.ServerClick += new EventHandler(DeckButton_Click);
                 ConfirmDeck.Controls.Add(DeckButton);
-
+                
 
 
 
 
             }
-            
+
+            HtmlButton RandomDeckButton = new HtmlButton
+            {
+                InnerHtml = "Generate Random Deck"
+            };
+            RandomDeckButton.Attributes.Add("style", "float: right;");
+            RandomDeckButton.ServerClick += new EventHandler(RandomDeck_Click);
+            ConfirmDeck.Controls.Add(RandomDeckButton);
+
 
 
             //create deck viewer
@@ -93,6 +101,44 @@ namespace MTGApp
 
 
         public void DeckButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void RandomDeck_Click(object sender, EventArgs e)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+
+            builder.DataSource = "hrpsvr.database.windows.net";
+            builder.UserID = "hrpzip";
+            builder.Password = "DBMProject1!";
+            builder.InitialCatalog = "MagicDB";
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                string newDeckName = RandomDeck.Text;
+                if(!string.IsNullOrEmpty(newDeckName))
+                {
+                    string randomDeckQuery = "EXEC RandomDeck @UserID = ";
+                    randomDeckQuery += 22;
+                    randomDeckQuery += ", @DeckName = \'";
+                    randomDeckQuery += newDeckName;
+                    randomDeckQuery += "\';";
+
+                    SqlCommand cmd = new SqlCommand(randomDeckQuery, connection);
+                    cmd.ExecuteNonQuery();
+                }
+                else
+                {
+                    ErrorMsg.Text = "This is not a valid deck name!";
+                    
+                }
+                connection.Close();
+                Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            }
+        }
+
+        protected void RandomDeck_TextChanged(object sender, EventArgs e)
         {
 
         }

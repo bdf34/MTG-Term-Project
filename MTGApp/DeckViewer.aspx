@@ -80,6 +80,9 @@
 
 
         </div>
+         <td><asp:TextBox ID="RandomDeck" placeholder="Random Deck" style="text-align: center" runat="server"></asp:TextBox></td>
+         <td><asp:PlaceHolder ID="RandomDeckButton" runat="server"/></td>
+        <td><asp:Label ID="ErrorMsg" style="color:red" runat="server"></asp:Label></td>
     </form>
 </body>
 </html>
