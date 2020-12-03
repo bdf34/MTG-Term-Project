@@ -26,7 +26,8 @@ namespace MTGApp
                 InnerHtml = "Submit"
             };
             DeckButton.Attributes.Add("style", "float: left;");
-            DeckButton.ServerClick += new EventHandler(DeckButton_Click);
+            //DeckButton.ServerClick += new EventHandler(DeckButton_Click);
+            DeckButton.ServerClick += new EventHandler(Select_Deck);
             PlaceHolder1.Controls.Add(DeckButton);
 
             HtmlButton RandomDeckButton = new HtmlButton
@@ -97,23 +98,7 @@ namespace MTGApp
             builder.InitialCatalog = "MagicDB";
 
             string selection = Select1.Value;
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-            {
-                string deckTitle = "";
-                string queryBuild = "SELECT deckName FROM Decks WHERE deckID = " + selection + ";";
-                SqlCommand command = new SqlCommand(queryBuild, connection);
-                connection.Open();
-
-                SqlDataReader reader = command.ExecuteReader();
-
-                // Call Read before accessing data.
-                while (reader.Read())
-                {
-                    deckTitle += reader["deckName"].ToString();
-                }
-                fuckingHell.InnerText = deckTitle;
-                connection.Close();
-            }
+            
 
 
             List<string> ProblemIDs = new List<string>();
@@ -213,6 +198,51 @@ namespace MTGApp
         protected void RandomDeck_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        protected void Select_Deck(object sender, EventArgs e)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+            {
+                DataSource = "hrpsvr.database.windows.net",
+                UserID = "hrpzip",
+                Password = "DBMProject1!",
+                InitialCatalog = "MagicDB"
+            };
+
+            string Selection = Select1.Value.ToString();
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                
+                string queryBuild = "SELECT  Decks.deckName as deckName, Card.name as cardName, DeckList.quantity as quantity FROM Decks, DeckList, Card WHERE ";
+                queryBuild += "Card.cardID = DeckList.cardID and Decks.deckID = DeckList.deckID and DeckList.deckID = " + Selection + ";";
+                SqlDataAdapter command = new SqlDataAdapter(queryBuild, connection);
+                connection.Open();
+
+                DataSet ds = new DataSet();
+                command.Fill(ds, "DeckList");
+                Repeater1.DataSource = ds;
+                Repeater1.DataBind();
+            }
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                string deckTitle = "";
+                string queryBuild = "SELECT deckName FROM Decks WHERE deckID = " + selection + ";";
+                SqlCommand command = new SqlCommand(queryBuild, connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+
+                // Call Read before accessing data.
+                while (reader.Read())
+                {
+                    deckTitle += reader["deckName"].ToString();
+                }
+                titleText.InnerText = deckTitle;
+                connection.Close();
+            }
         }
     }
 }

@@ -109,4 +109,132 @@ ADD FOREIGN KEY (cardID)
 	ON UPDATE NO ACTION
 
 
+USE [MagicDB]
+GO
 
+/****** Object: SqlProcedure [dbo].[DeckInsert] Script Date: 12/3/2020 3:36:29 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE DeckInsert @UserID int, @Quantity int, @CardName varchar(60), @DeckName varchar(50), @Format varchar(60) 
+AS
+
+ DECLARE @CardId INT;
+ DECLARE @DeckId INT;
+ 
+ DECLARE @ExistsCount INT;
+
+ SET @CardId = (SELECT cardID FROM Cards WHERE Cards.name = @CardName);
+
+--First we check to see if this deck exists in the deck table. If not, create a record.
+SET @ExistsCount = (SELECT COUNT(deckID) FROM Decks WHERE userID = @UserID AND deckName = @DeckName); 
+
+IF (@ExistsCount = 0)
+BEGIN
+	INSERT INTO Decks VALUES (@UserID, @DeckName, @Format, 'colorless', null, null);
+END
+
+SET @DeckId = (SELECT deckID FROM Decks WHERE deckName = @DeckName);
+
+--Check to see if this card is in the user's collection at all
+SET @ExistsCount = (SELECT COUNT(cardID) FROM Collection WHERE userID = @UserID AND cardID = @CardId);
+IF (@ExistsCount = 0) --if not, insert just enough to cover this addition
+BEGIN
+	INSERT INTO Collection VALUES (@UserID, @CardId, @Quantity, @Quantity, 0);
+END
+
+--Get collection quantity
+ DECLARE @QuantityInDecks INT;
+ DECLARE @QuantityAvailable INT;
+ Declare @CollectionQuantity INT;
+
+ SET @QuantityInDecks = (SELECT quantityInDecks FROM Collection WHERE cardID = @CardId AND userID = @UserID);
+ SET @QuantityAvailable = (SELECT quantityAvailable FROM Collection WHERE cardID = @CardId AND userID = @UserID);
+ SET @CollectionQuantity = @QuantityInDecks + @QuantityAvailable;
+
+SET @QuantityAvailable -= @Quantity;
+SET @QuantityInDecks += @Quantity;
+
+UPDATE Collection
+	SET quantityAvailable = @QuantityAvailable WHERE cardID = @CardId AND userID = @UserID;
+	
+UPDATE Collection
+	SET quantityInDecks = @QuantityInDecks WHERE cardID = @CardId AND userID = @UserID;
+
+--Check to see if the card being entered exists in the Deck List table. 
+SET @ExistsCount = (SELECT COUNT(cardID) FROM DeckList WHERE deckID = @DeckId AND cardID = @CardId);
+IF (@ExistsCount = 0)
+BEGIN
+	
+ 
+	INSERT INTO DeckList VALUES (@DeckId, @CardId, @Quantity, @CollectionQuantity, 3, 0)	
+END
+ELSE
+BEGIN
+	UPDATE DeckList
+	SET quantity = @Quantity WHERE deckID = @DeckId and cardID = @CardId;
+END
+
+--Determine the Color of the deck, based on the color of the cards in the deck
+Declare @DeckColor varchar(20) = ' ';
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and Card.color like '%W%') > 0)
+BEGIN
+	SET @DeckColor += 'W';
+END
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and Card.color like '%U%') > 0)
+BEGIN
+	SET @DeckColor += 'U';
+END
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and Card.color like '%B%') > 0)
+BEGIN
+	SET @DeckColor += 'B';
+END
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and (Card.color like '%R%' and Card.color not like '%colorless%')) > 0)
+BEGIN
+	SET @DeckColor += 'R';
+END
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and Card.color like '%G%') > 0)
+BEGIN
+	SET @DeckColor += 'G';
+END
+If @DeckColor = ' '
+BEGIN
+	SET @DeckColor = 'colorless';
+END
+
+Update Decks
+Set color = @DeckColor where deckID = @DeckId;
+
+--Determine the Color Identity of the deck, based on the color identity of the cards in the deck
+Declare @DeckIdentity varchar(10) = ' ';
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and Card.colorIdentity like '%W%') > 0)
+BEGIN
+	SET @DeckIdentity += 'W';
+END
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and Card.colorIdentity like '%U%') > 0)
+BEGIN
+	SET @DeckIdentity += 'U';
+END
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and Card.colorIdentity like '%B%') > 0)
+BEGIN
+	SET @DeckIdentity += 'B';
+END
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and (Card.colorIdentity like '%R%' and Card.colorIdentity not like '%colorless%')) > 0)
+BEGIN
+	SET @DeckIdentity += 'R';
+END
+If ((Select Count(*) from DeckList, Card where DeckList.deckID = @DeckId and DeckList.cardID = Card.cardID and Card.colorIdentity like '%G%') > 0)
+BEGIN
+	SET @DeckIdentity += 'G';
+END
+If @DeckIdentity = ' '
+BEGIN
+	SET @DeckIdentity = 'colorless';
+END
+
+Update Decks
+Set colorIdentity = @DeckIdentity where deckID = @DeckId;

@@ -1,26 +1,27 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="DeckViewer.aspx.cs" Inherits="MTGApp.DeckViewer" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server" >
-        
-<h3 id="fuckingHell" runat="server">Test Text</h3>
-    
-    <asp:Repeater ID="Repeater1" runat="server" 
-         DataSourceID="SqlDataSource1">
- 
-          <HeaderTemplate>
 
-              <table>
+Choose your deck:
+    <br />
+<select id="Select1" multiple="false" runat="server" style="float:left"/>   <asp:PlaceHolder ID="PlaceHolder1" runat="server" />
+    
+<h3 id="titleText" runat="server">Test Text</h3>
+    <asp:TextBox ID="ProblemCardEntry" Style="float:right"  Wrap="true" TextMode="MultiLine" mode="multiline" runat="server" Width ="500" Height ="500"/>
+    <asp:Repeater ID="Repeater1" runat="server" > 
+          <HeaderTemplate>
+              <table  style="float:left">
               <tr>
                  <th>Card ID Number</th>
                  <th>Quantity</th>
               </tr>
           </HeaderTemplate>
-
+        
           <ItemTemplate>
           <tr>
               <td bgcolor="#CCFFCC">
                 <asp:Label runat="server" ID="Label1" 
-                    text='<%# Eval("name") %>' />
+                    text='<%# Eval("cardName") %>' />
               </td>
               <td bgcolor="#CCFFCC">
                   <asp:Label runat="server" ID="Label2" 
@@ -33,7 +34,7 @@
           <tr>
               <td >
                 <asp:Label runat="server" ID="Label3" 
-                    text='<%# Eval("name") %>' />
+                    text='<%# Eval("cardName") %>' />
               </td>
               <td >
                  <asp:Label runat="server" ID="Label4" 
@@ -41,13 +42,14 @@
               </td>
           </tr>
           </AlternatingItemTemplate>
-          
-
-          <FooterTemplate>
+                    <FooterTemplate>
               </table>
           </FooterTemplate>
       </asp:Repeater>
     
+    
+        
+        <br />
     
     <div>
             <br />
@@ -60,27 +62,20 @@
             <br />
             <br />
             <br />
-            Choose your deck:
-            <select id="Select1" multiple="false" runat="server"/>
+            
             <asp:PlaceHolder ID="ConfirmDeck" runat="server" />
-            <asp:PlaceHolder ID="PlaceHolder1" runat="server" />
-            <asp:PlaceHolder ID="DeckDisplay" runat="server" />
+            
+            
             <asp:PlaceHolder ID="ProblemCardDisplay" runat="server" />
-            <asp:PlaceHolder ID="ProblemCardEntry" runat="server" />
-            <asp:PlaceHolder ID="DeckEntry" runat="server" />
+            
+            
             <asp:PlaceHolder ID="SuggestCardButton" runat="server" />
             <asp:PlaceHolder ID="SuggestedCard" runat="server" />
-
-
+        
+        <asp:textbox id="DeckEntry" mode="multiline" runat="server"/>
          
 
-                  <asp:SqlDataSource 
-          ConnectionString=
-              "<%$ ConnectionStrings:myServer %>"
-          ID="SqlDataSource1" runat="server" 
-          SelectCommand="SELECT  Decks.deckName, Card.name, DeckList.quantity FROM Decks, DeckList, Card WHERE 
-                      Card.cardID = DeckList.cardID and Decks.deckID = DeckList.deckID and DeckList.deckID = 142;">
-      </asp:SqlDataSource>
+                  
 
 
         </div>
@@ -92,7 +87,7 @@
 <img src="https://c1.scryfall.com/file/scryfall-cards/large/front/8/6/86bf43b1-8d4e-4759-bb2d-0b2e03ba7012.jpg?1562242171"  width="20%" />
 </a>
 
-    <br />
+    
     <br />
     <br />
     <br />

@@ -15,24 +15,6 @@ namespace MTGApp
     {
 
         /// <summary>
-        /// fuckingHell control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl fuckingHell;
-
-        /// <summary>
-        /// Repeater1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater Repeater1;
-
-        /// <summary>
         /// Select1 control.
         /// </summary>
         /// <remarks>
@@ -40,15 +22,6 @@ namespace MTGApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect Select1;
-
-        /// <summary>
-        /// ConfirmDeck control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ConfirmDeck;
 
         /// <summary>
         /// PlaceHolder1 control.
@@ -60,13 +33,40 @@ namespace MTGApp
         protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder1;
 
         /// <summary>
-        /// DeckDisplay control.
+        /// titleText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder DeckDisplay;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl titleText;
+
+        /// <summary>
+        /// ProblemCardEntry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ProblemCardEntry;
+
+        /// <summary>
+        /// Repeater1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater Repeater1;
+
+        /// <summary>
+        /// ConfirmDeck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder ConfirmDeck;
 
         /// <summary>
         /// ProblemCardDisplay control.
@@ -76,24 +76,6 @@ namespace MTGApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.PlaceHolder ProblemCardDisplay;
-
-        /// <summary>
-        /// ProblemCardEntry control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ProblemCardEntry;
-
-        /// <summary>
-        /// DeckEntry control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder DeckEntry;
 
         /// <summary>
         /// SuggestCardButton control.
@@ -114,13 +96,13 @@ namespace MTGApp
         protected global::System.Web.UI.WebControls.PlaceHolder SuggestedCard;
 
         /// <summary>
-        /// SqlDataSource1 control.
+        /// DeckEntry control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource SqlDataSource1;
+        protected global::System.Web.UI.WebControls.TextBox DeckEntry;
 
         /// <summary>
         /// RandomDeck control.
