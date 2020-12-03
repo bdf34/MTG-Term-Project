@@ -233,7 +233,7 @@ namespace MTGApp
                 {
                     queryBuild = "EXEC CollectionInsert @UserId = ";
                     //set user id
-                    queryBuild += i;
+                    queryBuild += 22;
                     queryBuild += ", @Quantity = ";
                     queryBuild += record.Item1;
                     queryBuild += ", @CardName = \'";

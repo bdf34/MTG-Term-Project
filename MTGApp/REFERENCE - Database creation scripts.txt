@@ -24,6 +24,12 @@ CREATE TABLE Decks (
 )
 
 
+CREATE TABLE Suggestions(
+	cardID int,
+	deckID int,
+	Primary Key (cardID,deckID)
+)
+
 CREATE TABLE Cards(
 	cardID varchar(50) PRIMARY KEY,
 	name varchar(60) NOT NULL,
