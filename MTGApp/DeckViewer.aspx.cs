@@ -17,7 +17,6 @@ namespace MTGApp
 {
     public partial class DeckViewer : System.Web.UI.Page
     {
-        bool validPC = false;
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -36,12 +35,22 @@ namespace MTGApp
                 HtmlButton PCValidate = new HtmlButton
                 {
                     ID = "PCValidate",
-                    InnerHtml = "Validate"
+                    InnerHtml = "Submit"
                 };
                 PCValidate.Attributes.Add("style", "float: right;");
                 PCValidate.ServerClick += new EventHandler(Validate_PC);
                 PlaceHolder2.Controls.Add(PCValidate);
                 PlaceHolder2.Visible = false;
+
+                HtmlButton SuggestButton = new HtmlButton
+                {
+                    ID = "DisplaySuggestions",
+                    InnerHtml = "Click for Suggestions"
+                };
+                SuggestButton.Attributes.Add("style", "float: unset;");
+                SuggestButton.ServerClick += new EventHandler(SuggestCardButton_Click);
+                SuggestCardButton.Controls.Add(SuggestButton);
+                SuggestCardButton.Visible = false;
 
 
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
@@ -79,6 +88,16 @@ namespace MTGApp
                 PCValidate.ServerClick += new EventHandler(Validate_PC);
                 PlaceHolder2.Controls.Add(PCValidate);
                 PlaceHolder2.Visible = true;
+
+                HtmlButton SuggestButton = new HtmlButton
+                {
+                    ID = "DisplaySuggestions",
+                    InnerHtml = "Click for Suggestions"
+                };
+                SuggestButton.Attributes.Add("style", "float: unset;");
+                SuggestButton.ServerClick += new EventHandler(SuggestCardButton_Click);
+                SuggestCardButton.Controls.Add(SuggestButton);
+                SuggestCardButton.Visible = true;
             }
 
         }
@@ -117,11 +136,10 @@ namespace MTGApp
             {
                 messageOutput.InnerText = "Not found";
                 picOutput.Src = " ";
-                validPC = false;
             }
             else
             {
-                    using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
                 {
                     string uri = " ";
                     connection.Open();
@@ -139,20 +157,28 @@ namespace MTGApp
                     messageOutput.InnerText = " ";
                     picOutput.Width = 200;
                     picOutput.Src = uri;
-                    validPC = true;
                     connection.Close();
+
+                }
+
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+                    connection.Open();
+                    string deckID = Select1.Value.ToString();
+                    string queryBuild = "INSERT INTO ProblemCards VALUES ( " + deckID + ", " + pcNum + ");";
+                    
+                    SqlCommand command = new SqlCommand(queryBuild, connection);
+
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
                 }
             }
 
         }
 
+
         public void SuggestCardButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-        public void DeckButton_Click(object sender, EventArgs e)
         {
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
@@ -204,13 +230,23 @@ namespace MTGApp
 
 
             int userID = 22;
+            string deckID = Select1.Value;
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                string queryBuild = "Delete Suggestions WHERE deckID = " + deckID + ";";
+                SqlCommand command = new SqlCommand(queryBuild, connection);
+
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
 
             foreach (string item in ProblemIDs)
             {
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
                 {
                     connection.Open();
-                    string deckID = Select1.Value;
                     string queryBuild = "Execute FixProblems @CardID=" + item +
                         ", @Color= " + deckColors +
                         ", @DeckID=" + deckID +
@@ -220,17 +256,88 @@ namespace MTGApp
                     command.ExecuteNonQuery();
                     connection.Close();
                 }
-
             }
+
+            string firstCard = Get_Suggested_Card(deckID);
+            string secondCard = Get_Suggested_Card(deckID);
+            string thirdCard = Get_Suggested_Card(deckID);
+            suggestion1.Width = 200;
+            suggestion2.Width = 200;
+            suggestion3.Width = 200;
+            suggestion1.Src = firstCard;
+            suggestion2.Src = secondCard;
+            suggestion3.Src = thirdCard;
+
+            
 
 
         }
 
+        protected string Get_Suggested_Card(string deckID)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+
+            builder.DataSource = "hrpsvr.database.windows.net";
+            builder.UserID = "hrpzip";
+            builder.Password = "DBMProject1!";
+            builder.InitialCatalog = "MagicDB";
+
+            string holder = " ";
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                string queryBuild = "SELECT TOP 1 cardID From Suggestions WHERE deckID = " 
+                    + deckID + " ORDER BY NEWID();";
+
+                SqlCommand command = new SqlCommand(queryBuild, connection);
+                SqlDataReader reader2 = command.ExecuteReader();
+
+                
+                while (reader2.Read())
+                {
+
+                    holder = reader2["cardID"].ToString();
+                }
+                connection.Close();
+            }
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                string queryBuild = "Delete Suggestions where cardID = " + holder + "AND deckID = " + deckID + ";";
+                SqlCommand command = new SqlCommand(queryBuild, connection);
+
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+
+            string suggestedURI = " ";
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                string queryBuild = "SELECT TOP 1 imageURI From Card WHERE cardID = " + holder + ";";
+
+                SqlCommand command = new SqlCommand(queryBuild, connection);
+                SqlDataReader reader2 = command.ExecuteReader();
+
+                while (reader2.Read())
+                {
+
+                    suggestedURI = reader2["imageURI"].ToString();
+                }
+                connection.Close();
+            }
+
+            return suggestedURI;
+        }
 
         protected void Select_Deck(object sender, EventArgs e)
         {
             PlaceHolder2.Visible = true;
-            
+            SuggestCardButton.Visible = true;
+
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
             {
                 DataSource = "hrpsvr.database.windows.net",

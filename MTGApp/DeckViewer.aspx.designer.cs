@@ -105,15 +105,6 @@ namespace MTGApp
         protected global::System.Web.UI.HtmlControls.HtmlImage picOutput;
 
         /// <summary>
-        /// suggestion1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlImage suggestion1;
-
-        /// <summary>
         /// suggestedCardsText control.
         /// </summary>
         /// <remarks>
@@ -123,6 +114,15 @@ namespace MTGApp
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl suggestedCardsText;
 
         /// <summary>
+        /// suggestion1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage suggestion1;
+
+        /// <summary>
         /// suggestion2 control.
         /// </summary>
         /// <remarks>
@@ -130,5 +130,14 @@ namespace MTGApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlImage suggestion2;
+
+        /// <summary>
+        /// suggestion3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage suggestion3;
     }
 }

@@ -1,6 +1,9 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="DeckViewer.aspx.cs" Inherits="MTGApp.DeckViewer" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server" >
+
+   <h5 style="text-align:center; float:unset">Choose a deck, and enter cards that give you trouble. We'll suggest cards that might help!  </h5> 
+
     <h3 ID="problemHeader" runat="server" Style="float:right; margin-left: 177px;">Enter your Problem Cards here</h3>
     <br /><br />
 Choose your deck:
@@ -10,9 +13,10 @@ Choose your deck:
 <select id="Select1" multiple="false" runat="server" style="float:left"/>   <asp:PlaceHolder ID="PlaceHolder1" runat="server" /> 
    
     <div style="text-align:center; float:unset">
-            <asp:PlaceHolder ID="SuggestCardButton" runat="server" />
-            Div area
+   <br /><br /><br />
+        <asp:PlaceHolder ID="SuggestCardButton" runat="server" />
    </div>
+    <br />
     <br />
 <h3 id="titleText" runat="server"></h3>
     <asp:Repeater ID="Repeater1" runat="server" > 
@@ -72,14 +76,23 @@ Choose your deck:
             <br />
 
     <div style="text-align:center; float:unset">
-            <a href="" Style="float:right">
-<img  ID ="suggestion1" runat="server"/>
-</a>
             <h5 runat="server" id="suggestedCardsText">Suggested cards</h5>
-            <a href="" Style="float:right">
+        <br />
+            <br />
+            <br />
+            <br />
+
+            <a href="" Style="float:unset">
+<img  ID ="suggestion1" runat="server"/>
+</a>        
+            <a href="" Style="float:unset">
 <img  ID ="suggestion2" runat="server"/>
 </a>
-            
+    
+                <a href="" Style="float:unset">
+<img  ID ="suggestion3" runat="server"/>
+</a>
+        
    </div>
         
 
@@ -92,7 +105,38 @@ Choose your deck:
     <br />
     <br />
     <br />
-
-    </select>
+        <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+        <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+        <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    
 
 </asp:Content>
