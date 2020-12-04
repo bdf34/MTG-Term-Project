@@ -143,7 +143,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
-    <Content Include="DeckEntry.aspx" />
+    <Content Include="RandomDeck.aspx" />
     <Content Include="DeckViewer.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
@@ -221,12 +221,12 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DeckEntry.aspx.cs">
-      <DependentUpon>DeckEntry.aspx</DependentUpon>
+    <Compile Include="RandomDeck.aspx.cs">
+      <DependentUpon>RandomDeck.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="DeckEntry.aspx.designer.cs">
-      <DependentUpon>DeckEntry.aspx</DependentUpon>
+    <Compile Include="RandomDeck.aspx.designer.cs">
+      <DependentUpon>RandomDeck.aspx</DependentUpon>
     </Compile>
     <Compile Include="DeckViewer.aspx.cs">
       <DependentUpon>DeckViewer.aspx</DependentUpon>

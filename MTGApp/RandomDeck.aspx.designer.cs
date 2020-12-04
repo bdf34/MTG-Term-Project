@@ -15,39 +15,48 @@ namespace MTGApp
     {
 
         /// <summary>
-        /// Span1 control.
+        /// ConfirmDeck control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Span1;
+        protected global::System.Web.UI.WebControls.PlaceHolder ConfirmDeck;
 
         /// <summary>
-        /// entrybox control.
+        /// RandomDeck control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTextArea entrybox;
+        protected global::System.Web.UI.WebControls.TextBox RandomDeck;
 
         /// <summary>
-        /// Message control.
+        /// RandomDeckButton control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Message;
+        protected global::System.Web.UI.WebControls.PlaceHolder RandomDeckButton;
 
         /// <summary>
-        /// ControlContainer control.
+        /// ErrorMsg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ControlContainer;
+        protected global::System.Web.UI.WebControls.Label ErrorMsg;
+
+        /// <summary>
+        /// Repeater1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater Repeater1;
     }
 }

@@ -17,31 +17,32 @@ namespace MTGApp
 {
     public partial class DeckViewer : System.Web.UI.Page
     {
+        bool validPC = false;
         protected void Page_Load(object sender, EventArgs e)
         {
 
             HtmlButton DeckButton = new HtmlButton
             {
                 ID = "Submitter",
-                InnerHtml = "Submit"
+                InnerHtml = "Select"
             };
             DeckButton.Attributes.Add("style", "float: left;");
-            //DeckButton.ServerClick += new EventHandler(DeckButton_Click);
             DeckButton.ServerClick += new EventHandler(Select_Deck);
             PlaceHolder1.Controls.Add(DeckButton);
-
-            HtmlButton RandomDeckButton = new HtmlButton
-            {
-                InnerHtml = "Generate Random Deck"
-            };
-            RandomDeckButton.Attributes.Add("style", "float: right;");
-            RandomDeckButton.ServerClick += new EventHandler(RandomDeck_Click);
-            ConfirmDeck.Controls.Add(RandomDeckButton);
 
             if (!IsPostBack)
             {
 
-               
+                HtmlButton PCValidate = new HtmlButton
+                {
+                    ID = "PCValidate",
+                    InnerHtml = "Validate"
+                };
+                PCValidate.Attributes.Add("style", "float: right;");
+                PCValidate.ServerClick += new EventHandler(Validate_PC);
+                PlaceHolder2.Controls.Add(PCValidate);
+                PlaceHolder2.Visible = false;
+
 
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
                 {
@@ -67,18 +68,81 @@ namespace MTGApp
                 }
 
             }
+            else
+            {
+                HtmlButton PCValidate = new HtmlButton
+                {
+                    ID = "PCValidate",
+                    InnerHtml = "Validate"
+                };
+                PCValidate.Attributes.Add("style", "float: right;");
+                PCValidate.ServerClick += new EventHandler(Validate_PC);
+                PlaceHolder2.Controls.Add(PCValidate);
+                PlaceHolder2.Visible = true;
+            }
 
-           
+        }
 
+        public void Validate_PC(object sender, EventArgs e)
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
+            {
+                DataSource = "hrpsvr.database.windows.net",
+                UserID = "hrpzip",
+                Password = "DBMProject1!",
+                InitialCatalog = "MagicDB"
+            };
 
+            string pcCard;
+            pcCard = ProblemCardEntry.Text.ToString();
+            string pcNum = " ";
 
-            //create deck viewer
-            //create deck entry
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                string queryBuild = "SELECT cardID from Card WHERE name = \'" + pcCard + "\';";
+                SqlCommand command = new SqlCommand(queryBuild, connection);
 
-            //problem card display
+                SqlDataReader reader = command.ExecuteReader();
 
-            //problem card entry
+                // Call Read before accessing data.
+                while (reader.Read())
+                {
+                    pcNum = reader["cardID"].ToString();
+                }
+                connection.Close();
+            }
 
+            if (pcNum == " ")
+            {
+                messageOutput.InnerText = "Not found";
+                picOutput.Src = " ";
+                validPC = false;
+            }
+            else
+            {
+                    using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+                    string uri = " ";
+                    connection.Open();
+                    string queryBuild = "SELECT imageURI from Card WHERE cardID = " + pcNum + ";";
+                    SqlCommand command = new SqlCommand(queryBuild, connection);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    // Call Read before accessing data.
+                    while (reader.Read())
+                    {
+                        uri = reader["imageURI"].ToString();
+                    }
+
+                    messageOutput.InnerText = " ";
+                    picOutput.Width = 200;
+                    picOutput.Src = uri;
+                    validPC = true;
+                    connection.Close();
+                }
+            }
 
         }
 
@@ -98,8 +162,6 @@ namespace MTGApp
             builder.InitialCatalog = "MagicDB";
 
             string selection = Select1.Value;
-            
-
 
             List<string> ProblemIDs = new List<string>();
             string deckColors = "G";
@@ -160,48 +222,15 @@ namespace MTGApp
                 }
 
             }
-        }
 
-        public void RandomDeck_Click(object sender, EventArgs e)
-        {
-            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-
-            builder.DataSource = "hrpsvr.database.windows.net";
-            builder.UserID = "hrpzip";
-            builder.Password = "DBMProject1!";
-            builder.InitialCatalog = "MagicDB";
-            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
-            {
-                connection.Open();
-                string newDeckName = RandomDeck.Text;
-                if(!string.IsNullOrEmpty(newDeckName))
-                {
-                    string randomDeckQuery = "EXEC RandomDeck @UserID = ";
-                    randomDeckQuery += 22;
-                    randomDeckQuery += ", @DeckName = \'";
-                    randomDeckQuery += newDeckName;
-                    randomDeckQuery += "\';";
-
-                    SqlCommand cmd = new SqlCommand(randomDeckQuery, connection);
-                    cmd.ExecuteNonQuery();
-                }
-                else
-                {
-                    ErrorMsg.Text = "This is not a valid deck name!";
-                    
-                }
-                connection.Close();
-                Page.Response.Redirect(Page.Request.Url.ToString(), true);
-            }
-        }
-
-        protected void RandomDeck_TextChanged(object sender, EventArgs e)
-        {
 
         }
+
 
         protected void Select_Deck(object sender, EventArgs e)
         {
+            PlaceHolder2.Visible = true;
+            
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
             {
                 DataSource = "hrpsvr.database.windows.net",
@@ -229,7 +258,7 @@ namespace MTGApp
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 string deckTitle = "";
-                string queryBuild = "SELECT deckName FROM Decks WHERE deckID = " + selection + ";";
+                string queryBuild = "SELECT deckName FROM Decks WHERE deckID = " + Selection + ";";
                 SqlCommand command = new SqlCommand(queryBuild, connection);
                 connection.Open();
 

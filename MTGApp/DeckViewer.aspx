@@ -1,13 +1,20 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Site.Master"  CodeBehind="DeckViewer.aspx.cs" Inherits="MTGApp.DeckViewer" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server" >
-
+    <h3 ID="problemHeader" runat="server" Style="float:right; margin-left: 177px;">Enter your Problem Cards here</h3>
+    <br /><br />
 Choose your deck:
-    <br />
-<select id="Select1" multiple="false" runat="server" style="float:left"/>   <asp:PlaceHolder ID="PlaceHolder1" runat="server" />
     
-<h3 id="titleText" runat="server">Test Text</h3>
-    <asp:TextBox ID="ProblemCardEntry" Style="float:right"  Wrap="true" TextMode="MultiLine" mode="multiline" runat="server" Width ="500" Height ="500"/>
+    <br /><br /> <asp:TextBox ID="ProblemCardEntry" Style="float:right"  Wrap="true" runat="server" Width ="500"/>
+    <br /> 
+<select id="Select1" multiple="false" runat="server" style="float:left"/>   <asp:PlaceHolder ID="PlaceHolder1" runat="server" /> 
+   
+    <div style="text-align:center; float:unset">
+            <asp:PlaceHolder ID="SuggestCardButton" runat="server" />
+            Div area
+   </div>
+    <br />
+<h3 id="titleText" runat="server"></h3>
     <asp:Repeater ID="Repeater1" runat="server" > 
           <HeaderTemplate>
               <table  style="float:left">
@@ -29,7 +36,6 @@ Choose your deck:
               </td>
           </tr>
           </ItemTemplate>
-        
         <AlternatingItemTemplate>
           <tr>
               <td >
@@ -46,46 +52,36 @@ Choose your deck:
               </table>
           </FooterTemplate>
       </asp:Repeater>
-    
-    
-        
-        <br />
-    
-    <div>
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            
-            <asp:PlaceHolder ID="ConfirmDeck" runat="server" />
-            
-            
-            <asp:PlaceHolder ID="ProblemCardDisplay" runat="server" />
-            
-            
-            <asp:PlaceHolder ID="SuggestCardButton" runat="server" />
-            <asp:PlaceHolder ID="SuggestedCard" runat="server" />
-        
-        <asp:textbox id="DeckEntry" mode="multiline" runat="server"/>
-         
 
-                  
+    <asp:PlaceHolder ID="PlaceHolder2" runat="server"/> 
 
-
-        </div>
-         <td><asp:TextBox ID="RandomDeck" placeholder="Random Deck" style="text-align: center" runat="server"></asp:TextBox></td>
-         <td><asp:PlaceHolder ID="RandomDeckButton" runat="server"/></td>
-        <td><asp:Label ID="ErrorMsg" style="color:red" runat="server"></asp:Label></td>
-
-    <a href="" class="cancel" title="Cancel">
-<img src="https://c1.scryfall.com/file/scryfall-cards/large/front/8/6/86bf43b1-8d4e-4759-bb2d-0b2e03ba7012.jpg?1562242171"  width="20%" />
+        <h3 ID="messageOutput" runat="server" Style="float:right"></h3>
+        <a href="" Style="float:right">
+<img  ID ="picOutput" runat="server"/>
 </a>
+    
+    <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+    <div style="text-align:center; float:unset">
+            <a href="" Style="float:right">
+<img  ID ="suggestion1" runat="server"/>
+</a>
+            <h5 runat="server" id="suggestedCardsText">Suggested cards</h5>
+            <a href="" Style="float:right">
+<img  ID ="suggestion2" runat="server"/>
+</a>
+            
+   </div>
+        
 
     
     <br />
@@ -96,5 +92,7 @@ Choose your deck:
     <br />
     <br />
     <br />
+
+    </select>
 
 </asp:Content>

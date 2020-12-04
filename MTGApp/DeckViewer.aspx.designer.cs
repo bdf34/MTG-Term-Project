@@ -15,6 +15,24 @@ namespace MTGApp
     {
 
         /// <summary>
+        /// problemHeader control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl problemHeader;
+
+        /// <summary>
+        /// ProblemCardEntry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox ProblemCardEntry;
+
+        /// <summary>
         /// Select1 control.
         /// </summary>
         /// <remarks>
@@ -33,6 +51,15 @@ namespace MTGApp
         protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder1;
 
         /// <summary>
+        /// SuggestCardButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder SuggestCardButton;
+
+        /// <summary>
         /// titleText control.
         /// </summary>
         /// <remarks>
@@ -40,15 +67,6 @@ namespace MTGApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl titleText;
-
-        /// <summary>
-        /// ProblemCardEntry control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox ProblemCardEntry;
 
         /// <summary>
         /// Repeater1 control.
@@ -60,75 +78,57 @@ namespace MTGApp
         protected global::System.Web.UI.WebControls.Repeater Repeater1;
 
         /// <summary>
-        /// ConfirmDeck control.
+        /// PlaceHolder2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ConfirmDeck;
+        protected global::System.Web.UI.WebControls.PlaceHolder PlaceHolder2;
 
         /// <summary>
-        /// ProblemCardDisplay control.
+        /// messageOutput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder ProblemCardDisplay;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messageOutput;
 
         /// <summary>
-        /// SuggestCardButton control.
+        /// picOutput control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder SuggestCardButton;
+        protected global::System.Web.UI.HtmlControls.HtmlImage picOutput;
 
         /// <summary>
-        /// SuggestedCard control.
+        /// suggestion1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder SuggestedCard;
+        protected global::System.Web.UI.HtmlControls.HtmlImage suggestion1;
 
         /// <summary>
-        /// DeckEntry control.
+        /// suggestedCardsText control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox DeckEntry;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl suggestedCardsText;
 
         /// <summary>
-        /// RandomDeck control.
+        /// suggestion2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox RandomDeck;
-
-        /// <summary>
-        /// RandomDeckButton control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder RandomDeckButton;
-
-        /// <summary>
-        /// ErrorMsg control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label ErrorMsg;
+        protected global::System.Web.UI.HtmlControls.HtmlImage suggestion2;
     }
 }
