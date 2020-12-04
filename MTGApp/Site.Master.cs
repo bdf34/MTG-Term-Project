@@ -50,17 +50,20 @@ namespace MTGApp
                     if (sdr.Read())
                     {
                         Label4.Text = "Login Sucess......!!\n";
+
                         HttpCookie CookieName = new HttpCookie("username");
                         CookieName.Value = user;
                         Response.SetCookie(CookieName);
                         string User_name = Request.Cookies["username"].Value;
-                        Label3.Text = "Signed in as " + User_name;
+                        Label3.Text = "Signed in as " + user;
                     }
                     else
                     {
                         Label4.Text = "UserId& Password Is not correct Try again..!!";
 
                     }
+
+                    connection.Close();
                 }
 
             }
