@@ -57,10 +57,16 @@ namespace MTGApp
                         {
                             connection.Close();
                             connection.Open();
-                            Label3.Text = " ";
+                            Label30.Text = " ";
                             command.ExecuteNonQuery();
-                            Label3.Text = "Account Created!";
+                            Label30.Text = "Account Created!";
                             connection.Close();
+                            HttpCookie CookieName = new HttpCookie("username");
+                            CookieName.Value = Username;
+                            Response.SetCookie(CookieName);
+                            string User_name = Request.Cookies["username"].Value;
+                            Label loginbar = (Label)Page.Master.FindControl("Label3");
+                            loginbar.Text = "Signed in as " + Username;
                         }
                     }
                 }

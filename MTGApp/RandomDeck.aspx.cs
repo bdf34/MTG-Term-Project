@@ -94,7 +94,7 @@ namespace MTGApp
                 // Call Read before accessing data.
                 while (reader.Read())
                 {
-                    Selection = reader["deckID"].ToString();
+                    Selection += reader["deckID"].ToString();
                 }
             }
 
