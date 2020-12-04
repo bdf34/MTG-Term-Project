@@ -17,11 +17,16 @@ namespace MTGApp
             SignIn.ServerClick += new System.EventHandler(this.SignIn_Click);
             Signin.Controls.Add(SignIn);
 
-            /*HtmlButton SignUp = new HtmlButton();
-            SignUp.ID = "SignupButton";
-            SignUp.InnerHtml = "Register!";
-            SignUp.ServerClick += new System.EventHandler(this.SignUp_Click);
-            Signin.Controls.Add(SignUp); */
+            if(Request.Cookies["username"] != null)
+            {
+                string User_name = Request.Cookies["username"].Value;
+                Label3.Text = "Signed in as " + User_name;
+            }
+            else
+            {
+                Label3.Text = " ";
+            }
+
         }
         void SignIn_Click(object sender, EventArgs e)
         {

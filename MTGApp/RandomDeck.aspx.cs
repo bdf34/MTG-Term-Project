@@ -39,6 +39,24 @@ namespace MTGApp
             builder.Password = "DBMProject1!";
             builder.InitialCatalog = "MagicDB";
 
+            string userID = " ";
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                string User_name = Request.Cookies["username"].Value;
+                connection.Open();
+                string myQuery = "SELECT userID FROM UserInfo WHERE username ="
+                    + " '" + User_name + "' ";
+                SqlCommand command = new SqlCommand(myQuery, connection);
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+
+                    userID = reader["userID"].ToString();
+                }
+
+            }
+
+
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 connection.Open();
@@ -46,7 +64,7 @@ namespace MTGApp
                 if (!string.IsNullOrEmpty(newDeckName))
                 {
                     string randomDeckQuery = "EXEC RandomDeck @UserID = ";
-                    randomDeckQuery += 22;
+                    randomDeckQuery += userID;
                     randomDeckQuery += ", @DeckName = \'";
                     randomDeckQuery += newDeckName;
                     randomDeckQuery += "\';";
@@ -64,7 +82,7 @@ namespace MTGApp
             }
 
             string Selection = " ";
-            string userID = "22";
+            
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 string queryBuild = "SELECT TOP 1 deckID FROM Decks WHERE userID = " + userID + " order by deckID desc;";

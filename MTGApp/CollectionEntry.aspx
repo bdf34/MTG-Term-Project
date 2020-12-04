@@ -25,8 +25,7 @@
     
 
 
-<span id="Message" runat="server"> 
-              Message area
+<span id="Message" runat="server">  Message:
               </span>
 
 

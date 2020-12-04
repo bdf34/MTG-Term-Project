@@ -53,6 +53,9 @@
                     <ul class="nav navbar-nav">
                         <li><a runat="server" href="~/">Home</a></li>
                         <li><a runat="server" href="~/CollectionEntry">Collection Entry</a></li>
+                        <li><a runat="server" href="~/InsertDeck">Deck Entry</a></li>
+                        <li><a runat="server" href="~/RandomDeck">Random Deck</a></li>
+                        <li><a runat="server" href="~/DeckViewer">Deck Suggestions</a></li>
                         <li><a runat="server" href="~/About">About</a></li>
                     </ul>
                 </div>

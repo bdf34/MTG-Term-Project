@@ -23,6 +23,9 @@
  
       <span id="Message"
             runat="server"/>
+            <a href="" Style="float:unset">
+<img  ID ="randomCard" runat="server"/>
+</a>
         </div>
     </div>
 </asp:Content>

@@ -35,15 +35,17 @@ namespace MTGApp
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
 
-                string myQuery = "SELECT Top 1 * FROM Card ORDER BY NEWID()";
+                string myQuery = "SELECT Top 1 imageURI FROM Card ORDER BY NEWID()";
 
                 SqlCommand command = new SqlCommand(myQuery, connection);
                 connection.Open();
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
+                    randomCard.Width = 300;
                     while (reader.Read())
                     {
-                        Message.InnerHtml = (String.Format("{0}, {1}", reader[0], reader[1]));
+                        //Message.InnerHtml = (String.Format("{0}, {1}", reader[0], reader[1]));
+                        randomCard.Src = reader["imageURI"].ToString();
 
                     }
                 }

@@ -13,13 +13,10 @@ using Microsoft.Data.SqlClient;
 using System.Text;
 using System.Xml.Linq;
 
-
 namespace MTGApp
 {
-
-    public partial class CollectionEntry : Page
+    public partial class WebForm2 : System.Web.UI.Page
     {
-        
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -55,8 +52,8 @@ namespace MTGApp
                 outPutErrors(badValues);
             }
 
-               
-         }
+
+        }
 
         void outPutErrors(List<string> values)
         {
@@ -99,9 +96,9 @@ namespace MTGApp
                         while (!(Char.IsLetter(cardName[cardName.Length - 1]))) //if the last character is a carriage return or not a letter, get rid of it
                         {
                             cardName = cardName.Substring(0, (cardName.Length - 1));
-                            
+
                         }
-                        
+
                     }
 
                     if ((!breakFlag) && (i == line.Length - 1))
@@ -114,6 +111,7 @@ namespace MTGApp
                                                        where char.IsDigit(c)
                                                        select c).ToArray());
                 cardName = cardName.Replace("'", "''");
+                
                 cardList.Add(Tuple.Create(formattedQuantity, cardName));
             }
 
@@ -131,15 +129,16 @@ namespace MTGApp
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
                 string myQuery = "SELECT name FROM Card WHERE name =";
-                
+
                 connection.Open();
                 int counter = cardList.Count;
                 for (int i = 0; i < counter; i++)
                 {
                     if ((cardList[i].Item2 != null) && (cardList[i].Item2.Length > 1))
                     {
-                        //string test = .Substring(1, cardList[i].Item2.Length - 1);
-                        myQuery += ("\'" + cardList[i].Item2 + "\' " + ";");
+                        myQuery += "\'";
+                        myQuery += cardList[i].Item2;
+                        myQuery += "\' ;" ;
 
                         SqlCommand cmd = new SqlCommand(myQuery, connection);
 
@@ -179,19 +178,19 @@ namespace MTGApp
                 }
                 else
                 {
-                    return false;  
+                    return false;
                 }
 
-                
+
             }
 
 
         }
-    
-    
-        void insertCollection(List<Tuple<string,string>> cards)
+
+
+        void insertCollection(List<Tuple<string, string>> cards)
         {
-            
+
             SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder
             {
                 DataSource = "hrpsvr.database.windows.net",
@@ -208,7 +207,6 @@ namespace MTGApp
                 string myQuery = "SELECT userID FROM UserInfo WHERE username ="
                     + " '" + User_name + "' ";
                 SqlCommand command = new SqlCommand(myQuery, connection);
-                
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
@@ -221,19 +219,25 @@ namespace MTGApp
 
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
             {
-                connection.Open();
                 string queryBuild = " ";
+                string deckname = DeckTitle.Text;
+                connection.Open();
 
-                foreach (Tuple<string,string> record in cards)
+                foreach (Tuple<string, string> record in cards)
                 {
-                    queryBuild = "EXEC CollectionInsert @UserId = ";
+                    // DeckInsert @DeckName varchar(50), @Format varchar(60) 
+                    queryBuild = "EXEC DeckInsert @UserId = ";
                     //set user id
                     queryBuild += userID;
                     queryBuild += ", @Quantity = ";
                     queryBuild += record.Item1;
                     queryBuild += ", @CardName = \'";
                     queryBuild += record.Item2;
-                    queryBuild += "\';";
+                    queryBuild += "\' , @DeckName = \' ";
+                    queryBuild += deckname;
+                    queryBuild += " \' , @Format = \' Standard \' ;";
+
+
 
 
                     SqlCommand cmd = new SqlCommand(queryBuild, connection);
@@ -245,9 +249,9 @@ namespace MTGApp
 
             }
 
-            Message.InnerHtml = "Message area <br />Cards added successfully to your collection." ;
+            Message.InnerHtml = "<br /> Message: <br />Deck added successfully";
 
         }
 
-    }       
- }
+    }
+}

@@ -61,9 +61,27 @@ namespace MTGApp
                     InitialCatalog = "MagicDB"
                 };
 
+                string userID = " ";
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
                 {
-                    string queryBuild = "SELECT * FROM Decks WHERE userID = 22;";
+                    string User_name = Request.Cookies["username"].Value;
+                    connection.Open();
+                    string myQuery = "SELECT userID FROM UserInfo WHERE username ="
+                        + " '" + User_name + "' ";
+                    SqlCommand command = new SqlCommand(myQuery, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+
+                        userID = reader["userID"].ToString();
+                    }
+
+                }
+
+
+                using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+                {
+                    string queryBuild = "SELECT * FROM Decks WHERE userID = " + userID + ";";
                     SqlDataAdapter command = new SqlDataAdapter(queryBuild, connection);
                     connection.Open();
 
@@ -229,7 +247,25 @@ namespace MTGApp
             }
 
 
-            int userID = 22;
+            string userID = " ";
+
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                string User_name = Request.Cookies["username"].Value;
+                connection.Open();
+                string myQuery = "SELECT userID FROM UserInfo WHERE username ="
+                    + " '" + User_name + "' ";
+                SqlCommand command = new SqlCommand(myQuery, connection);
+                int i = 0;
+                object user_id = command.ExecuteScalar();
+                if (user_id != null)
+                {
+                    i = (int)user_id;
+                }
+                userID = i.ToString();
+            }
+
+
             string deckID = Select1.Value;
 
             using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
